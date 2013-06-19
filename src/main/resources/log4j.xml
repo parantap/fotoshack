@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/log/fotoshack/foto.log" />
+		<param name="Append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<!-- Set the threshold via a system property. Note that setting a default 
+			via $ { server_log_threshold:WARN } will not work. -->
+		<param name="Threshold" value="INFO" />
+		<param name="DatePattern" value=".yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MMM-dd HH:mm:ss,SSS} [%t] %c %x%n  %-5p %m%n" />
+		</layout>
+	</appender>
+	<root>
+		<appender-ref ref="FILE" />
+	</root>
+</log4j:configuration>

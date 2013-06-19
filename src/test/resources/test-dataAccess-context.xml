@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+				       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="entityMgrFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="false" />
+				<property name="generateDdl" value="true" />
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+			</bean>
+		</property>
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+
+	<!-- BoneCP configuration -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${fotoshack_mysql_driverClass}" />
+		<property name="jdbcUrl" value="${fotoshack_mysql_jdbcUrl}" />
+		<property name="username" value="${fotoshack_mysql_username}" />
+		<property name="password" value="${fotoshack_mysql_password}" />
+		<property name="idleConnectionTestPeriod" value="${fotoshack_mysql_idleConnectionTestPeriod}" />
+		<property name="idleMaxAge" value="${fotoshack_mysql_idleMaxAge}" />
+		<property name="maxConnectionsPerPartition"
+			value="${fotoshack_mysql_maxConnectionsPerPartition}" />
+		<property name="minConnectionsPerPartition"
+			value="${fotoshack_mysql_minConnectionsPerPartition}" />
+		<property name="partitionCount" value="${fotoshack_mysql_partitionCount}" />
+		<property name="acquireIncrement" value="${fotoshack_mysql_acquireIncrement}" />
+		<property name="statementsCacheSize" value="${fotoshack_mysql_statementsCacheSize}" />
+		<property name="releaseHelperThreads" value="${fotoshack_mysql_releaseHelperThreads}" />
+	</bean>
+
+</beans>
